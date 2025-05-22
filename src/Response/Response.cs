@@ -2,6 +2,10 @@ namespace web_server_csharp;
 
 public class Response
 {
+    public Response()
+    {
+        Message = string.Empty;
+    }
     public Response(StatusCode stat, string msg)
     {
         Status = stat;
@@ -11,4 +15,3 @@ public class Response
     public StatusCode Status { get; set; }
     
 }
-

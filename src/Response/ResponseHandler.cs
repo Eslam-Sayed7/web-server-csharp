@@ -2,16 +2,20 @@ namespace web_server_csharp;
 
 public class ResponseHandler
 {
-    public ResponseHandler(Response response)
+    public ResponseHandler( )
     {
-        _response = response;
-    }
-    
-    public async Task HandleResponseAsync(Stream stream)
+    } 
+    public async Task HandleResponseAsync( Stream _stream)
     {
+
+        var _response = new Response
+        {
+            Status = StatusCode.OK,
+            Message = "Hello Server Client" 
+        };
         try
         {
-            using var writer = new StreamWriter(stream) { AutoFlush = true };
+            var writer = new StreamWriter(_stream) { AutoFlush = true };
             string response = $"HTTP/1.1 {(int)_response.Status} {_response.Status}\r\n" +
                               "Content-Type: text/plain\r\n\r\n" +
                               $"{_response.Message}";
@@ -21,7 +25,10 @@ public class ResponseHandler
         {
             Console.WriteLine($"Error: {ex.Message}");
         }
+        finally
+        {
+            _stream.Close();
+        }
     }
-    Response _response;
     
 }
